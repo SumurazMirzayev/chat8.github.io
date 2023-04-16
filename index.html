@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Web Sayti</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #2c3e50;
+        color: white;
+        padding: 1rem;
+        text-align: center;
+      }
+      #messages {
+        border: 1px solid #ccc;
+        height: 300px;
+        overflow-y: scroll;
+        padding: 1rem;
+      }
+      form {
+        background-color: #f1f1f1;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+      }
+      input[type="text"],
+      button {
+        font-size: 1rem;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      button {
+        background-color: #2c3e50;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      button:hover {
+        background-color: #34495e;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Chat Web Sayti</h1>
+    </header>
+    <div id="messages"></div>
+    <form>
+      <input type="text" id="nameInput" placeholder="Ad" />
+      <input type="text" id="messageInput" placeholder="Mesajınız" />
+      <button type="submit">Gönder</button>
+    </form>
+
+    <script>
+      let nameInput = document.getElementById("nameInput");
+      let messageInput = document.getElementById("messageInput");
+      let messages = document.getElementById("messages");
+      let name = null;
+
+      function sendMessage() {
+        let message = messageInput.value;
+        let messageElement = document.createElement("div");
+        messageElement.textContent = name + ": " + message;
+        messages.appendChild(messageElement);
+        messageInput.value = "";
+      }
+
+      document.querySelector("form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (name === null) {
+          name = nameInput.value;
+          nameInput.disabled = true; // kullanıcının ismini yeniden değiştirmesini engeller
+          messageInput.focus(); // mesaj girdiği alanı seçer
+        } else {
+          sendMessage();
+        }
+      });
+    </script>
+  </body>
+</html>
