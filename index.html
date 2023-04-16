@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chat Web Sayti</title>
+    <title>Chat Web Sitesi</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -46,11 +46,11 @@
   </head>
   <body>
     <header>
-      <h1>Chat Web Sayti</h1>
+      <h1>Chat Web Sitesi</h1>
     </header>
     <div id="messages"></div>
     <form>
-      <input type="text" id="nameInput" placeholder="Ad" />
+      <input type="text" id="nameInput" placeholder="İsim" />
       <input type="text" id="messageInput" placeholder="Mesajınız" />
       <button type="submit">Gönder</button>
     </form>
@@ -60,12 +60,28 @@
       let messageInput = document.getElementById("messageInput");
       let messages = document.getElementById("messages");
       let name = null;
+      
+      // Sayfa yüklendiğinde, kaydedilen mesajları alıp sayfada gösterir.
+      window.addEventListener("load", () => {
+        let storedMessages = JSON.parse(localStorage.getItem("messages")) || [];
+        storedMessages.forEach((storedMessage) => {
+          let messageElement = document.createElement("div");
+          messageElement.textContent = storedMessage;
+          messages.appendChild(messageElement);
+        });
+      });
 
       function sendMessage() {
         let message = messageInput.value;
         let messageElement = document.createElement("div");
         messageElement.textContent = name + ": " + message;
         messages.appendChild(messageElement);
+        
+        // Yeni mesajı yerel depolama ekler.
+        let storedMessages = JSON.parse(localStorage.getItem("messages")) || [];
+        storedMessages.push(messageElement.textContent);
+        localStorage.setItem("messages", JSON.stringify(storedMessages));
+        
         messageInput.value = "";
       }
 
